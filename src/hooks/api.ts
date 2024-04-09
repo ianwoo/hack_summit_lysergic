@@ -2,6 +2,8 @@ import BN from "bn.js";
 import * as web3 from "@solana/web3.js";
 
 import { AccountMeta, Connection, Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
+import { deserialize } from "borsh";
+import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 
 const U64SIZE: number = 8;
 const U32SIZE: number = 4;
@@ -118,6 +120,16 @@ export class Numberu32 extends BN {
 //   redeemer_yt_ata: PublicKey;
 // };
 
+export async function findAssociatedTokenAddress(
+  walletAddress: PublicKey,
+  tokenMintAddress: PublicKey
+): Promise<PublicKey> {
+  return PublicKey.findProgramAddressSync(
+    [walletAddress.toBuffer(), TOKEN_PROGRAM_ID.toBuffer(), tokenMintAddress.toBuffer()],
+    ASSOCIATED_TOKEN_PROGRAM_ID
+  )[0];
+}
+
 //LIB FUNCTIONS
 export function getYieldTokenizerAddress(LsuMint: PublicKey, MaturityDate: Date): PublicKey {
   const _unixTimestamp = MaturityDate.getTime();
@@ -149,7 +161,14 @@ export function getPrincipalTokenAddress(YieldTokenizer: PublicKey, LsuMint: Pub
 }
 //need marker same as above
 
-//INSTRUCTION FUNCTIONS
+//TODO
+//GET FUNCTIONS
+export async function getVaultAndAtas(connection: Connection, staker: PublicKey, LsuMint: PublicKey) {
+  const stakerTokenAddr = await findAssociatedTokenAddress(staker, LsuMint);
+  const deserialized = deserialize(stakerTokenAddr);
+}
+
+//STAKE / REDEEM FUNCTIONS
 export async function makeTokenizeYieldInstruction(
   buyer: PublicKey,
   LsuMint: PublicKey,
