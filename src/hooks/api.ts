@@ -1,34 +1,21 @@
 import BN from "bn.js";
 import assert from "assert";
-import { Schema, serialize } from "borsh";
-// import { ASSOCIATED_TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import web3 from "@solana/web3.js";
 
-import {
-  AccountMeta,
-  //   AccountInfo,
-  Connection,
-  //   clusterApiUrl,
-  Keypair,
-  PublicKey,
-  //   SYSVAR_CLOCK_PUBKEY,
-  Transaction,
-  TransactionInstruction,
-} from "@solana/web3.js";
+import { AccountMeta, Connection, Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
 
 const U64SIZE: number = 8;
 const U32SIZE: number = 4;
 const DISCRIMINANT: number = 16;
 const SLICE: number = -2;
-const ENDPOINTS = {
-  // mainnet: "https://api.mainnet-beta.solana.com",
-  devnet: "https://api.devnet.solana.com",
-  testnet: "https://api.testnet.solana.com",
-  localhost: "127.0.1.1",
-};
+// const ENDPOINTS = {
+//   // mainnet: "https://api.mainnet-beta.solana.com",
+//   devnet: "https://api.devnet.solana.com",
+//   testnet: "https://api.testnet.solana.com",
+//   localhost: "127.0.1.1",
+// };
 
 const LYSERGIC_PROGRAM_ID = "LSDjBzV1CdC4zeXETyLnoUddeBeQAvXXRo49j8rSguH";
-
-const connection = new Connection(ENDPOINTS.devnet);
 
 export class Numberu64 extends BN {
   toBuffer(): Buffer {
@@ -83,58 +70,58 @@ export class Numberu32 extends BN {
   }
 }
 
-enum Expiry {
-  TwelveMo = 12,
-  EighteenMo = 18,
-  TwentyFourMo = 24,
-}
+// enum Expiry {
+//   TwelveMo = 12,
+//   EighteenMo = 18,
+//   TwentyFourMo = 24,
+// }
 
-type TokenizeYieldInstruction = {
-  buyer: PublicKey;
-  yield_tokenizer: PublicKey;
-  lsu_mint: PublicKey;
-  pt_mint: PublicKey;
-  yt_mint: PublicKey;
-  lsu_vault: PublicKey;
-  buyer_lsu_ata: PublicKey;
-  buyer_pt_ata: PublicKey;
-  buyer_yt_ata: PublicKey;
-  amount: Numberu64;
-};
+// type TokenizeYieldInstruction = {
+//   buyer: PublicKey;
+//   yield_tokenizer: PublicKey;
+//   lsu_mint: PublicKey;
+//   pt_mint: PublicKey;
+//   yt_mint: PublicKey;
+//   lsu_vault: PublicKey;
+//   buyer_lsu_ata: PublicKey;
+//   buyer_pt_ata: PublicKey;
+//   buyer_yt_ata: PublicKey;
+//   amount: Numberu64;
+// };
 
-type RedeemYieldInstruction = {
-  redeemer: PublicKey;
-  yield_tokenizer: PublicKey;
-  lsu_mint: PublicKey;
-  pt_mint: PublicKey;
-  yt_mint: PublicKey;
-  lsu_vault: PublicKey;
-  redeemer_lsu_ata: PublicKey;
-  redeemer_pt_ata: PublicKey;
-  redeemer_yt_ata: PublicKey;
-  amount: Numberu64;
-};
+// type RedeemYieldInstruction = {
+//   redeemer: PublicKey;
+//   yield_tokenizer: PublicKey;
+//   lsu_mint: PublicKey;
+//   pt_mint: PublicKey;
+//   yt_mint: PublicKey;
+//   lsu_vault: PublicKey;
+//   redeemer_lsu_ata: PublicKey;
+//   redeemer_pt_ata: PublicKey;
+//   redeemer_yt_ata: PublicKey;
+//   amount: Numberu64;
+// };
 
-type RedeemFromPTInstruction = {
-  redeemer: PublicKey;
-  yield_tokenizer: PublicKey;
-  lsu_mint: PublicKey;
-  pt_mint: PublicKey;
-  lsu_vault: PublicKey;
-  redeemer_lsu_ata: PublicKey;
-  redeemer_pt_ata: PublicKey;
-  amount: Numberu64;
-};
+// type RedeemFromPTInstruction = {
+//   redeemer: PublicKey;
+//   yield_tokenizer: PublicKey;
+//   lsu_mint: PublicKey;
+//   pt_mint: PublicKey;
+//   lsu_vault: PublicKey;
+//   redeemer_lsu_ata: PublicKey;
+//   redeemer_pt_ata: PublicKey;
+//   amount: Numberu64;
+// };
 
-type ClaimYieldInstruction = {
-  claimer: PublicKey;
-  yield_tokenizer: PublicKey;
-  lsu_mint: PublicKey;
-  yt_mint: PublicKey;
-  lsu_vault: PublicKey;
-  redeemer_lsu_ata: PublicKey;
-  redeemer_yt_ata: PublicKey;
-};
+// type ClaimYieldInstruction = {
+//   claimer: PublicKey;
+//   yield_tokenizer: PublicKey;
+//   lsu_mint: PublicKey;
+//   yt_mint: PublicKey;
+//   lsu_vault: PublicKey;
+//   redeemer_lsu_ata: PublicKey;
+//   redeemer_yt_ata: PublicKey;
+// };
 
 //LIB FUNCTIONS
 export function getYieldTokenizerAddress(LsuMint: PublicKey, MaturityDate: Date): PublicKey {
@@ -179,7 +166,6 @@ export async function makeTokenizeYieldInstruction(
   amount: Numberu64
 ) {
   const _yieldTokenizer = await getYieldTokenizerAddress(LsuMint, MaturityDate);
-  const _yieldTokenAddr = await getYieldTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
   const _ptMint = await getPrincipalTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
 
   const data = amount.toBuffer();
@@ -189,7 +175,6 @@ export async function makeTokenizeYieldInstruction(
     { pubkey: _yieldTokenizer, isSigner: false, isWritable: true },
     { pubkey: LsuMint, isSigner: false, isWritable: true },
     { pubkey: _ptMint, isSigner: false, isWritable: true },
-    { pubkey: _yieldTokenAddr, isSigner: false, isWritable: true },
     { pubkey: LsuVault, isSigner: false, isWritable: true },
     { pubkey: BuyerLsuAta, isSigner: false, isWritable: true },
     { pubkey: BuyerPtAta, isSigner: false, isWritable: true },
@@ -209,23 +194,15 @@ export async function makeRedeemYieldInstruction(
   LsuVault: PublicKey,
   RedeemerLsuAta: PublicKey,
   RedeemerPtAta: PublicKey,
-  BuyerYtAta: PublicKey,
-  amount: Numberu64
+  RedeemerYtAta: PublicKey,
+  amount: Numberu64,
+  MaturityDate: Date
 ) {
   const _yieldTokenizer = await getYieldTokenizerAddress(LsuMint, MaturityDate);
   const _yieldTokenAddr = await getYieldTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
   const _ptMint = await getPrincipalTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
 
-  // redeemer: PublicKey;
-  // yield_tokenizer: PublicKey;
-  // lsu_mint: PublicKey;
-  // pt_mint: PublicKey;
-  // yt_mint: PublicKey;
-  // lsu_vault: PublicKey;
-  // redeemer_lsu_ata: PublicKey;
-  // redeemer_pt_ata: PublicKey;
-  // redeemer_yt_ata: PublicKey;
-  // amount: Numberu64;
+  const data = amount.toBuffer();
 
   const keys: AccountMeta[] = [
     { pubkey: Redeemer, isSigner: true, isWritable: true },
@@ -234,10 +211,80 @@ export async function makeRedeemYieldInstruction(
     { pubkey: _ptMint, isSigner: false, isWritable: true },
     { pubkey: _yieldTokenAddr, isSigner: false, isWritable: true },
     { pubkey: LsuVault, isSigner: false, isWritable: true },
-    { pubkey: BuyerLsuAta, isSigner: false, isWritable: true },
-    { pubkey: BuyerPtAta, isSigner: false, isWritable: true },
-    { pubkey: BuyerYtAta, isSigner: false, isWritable: true },
+    { pubkey: RedeemerLsuAta, isSigner: false, isWritable: true },
+    { pubkey: RedeemerPtAta, isSigner: false, isWritable: true },
+    { pubkey: RedeemerYtAta, isSigner: false, isWritable: true },
   ];
+
+  return new TransactionInstruction({
+    keys,
+    programId: new PublicKey(LYSERGIC_PROGRAM_ID),
+    data,
+  });
+}
+
+export async function makeRedeemFromPTInstruction(
+  Redeemer: PublicKey,
+  LsuMint: PublicKey,
+  LsuVault: PublicKey,
+  RedeemerLsuAta: PublicKey,
+  RedeemerPtAta: PublicKey,
+  amount: Numberu64,
+  MaturityDate: Date
+) {
+  const _yieldTokenizer = await getYieldTokenizerAddress(LsuMint, MaturityDate);
+  const _yieldTokenAddr = await getYieldTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
+  const _ptMint = await getPrincipalTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
+
+  const data = amount.toBuffer();
+
+  const keys: AccountMeta[] = [
+    { pubkey: Redeemer, isSigner: true, isWritable: true },
+    { pubkey: _yieldTokenizer, isSigner: false, isWritable: true },
+    { pubkey: LsuMint, isSigner: false, isWritable: true },
+    { pubkey: _ptMint, isSigner: false, isWritable: true },
+    { pubkey: _yieldTokenAddr, isSigner: false, isWritable: true },
+    { pubkey: LsuVault, isSigner: false, isWritable: true },
+    { pubkey: RedeemerLsuAta, isSigner: false, isWritable: true },
+    { pubkey: RedeemerPtAta, isSigner: false, isWritable: true },
+  ];
+
+  return new TransactionInstruction({
+    keys,
+    programId: new PublicKey(LYSERGIC_PROGRAM_ID),
+    data,
+  });
+}
+
+export async function makeClaimYieldInstruction(
+  Claimer: PublicKey,
+  LsuMint: PublicKey,
+  LsuVault: PublicKey,
+  RedeemerLsuAta: PublicKey,
+  RedeemerYtAta: PublicKey,
+  amount: Numberu64,
+  MaturityDate: Date
+) {
+  const _yieldTokenizer = await getYieldTokenizerAddress(LsuMint, MaturityDate);
+  const _yieldTokenAddr = await getYieldTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
+
+  const data = amount.toBuffer();
+
+  const keys: AccountMeta[] = [
+    { pubkey: Claimer, isSigner: true, isWritable: true },
+    { pubkey: _yieldTokenizer, isSigner: false, isWritable: true },
+    { pubkey: LsuMint, isSigner: false, isWritable: true },
+    { pubkey: _yieldTokenAddr, isSigner: false, isWritable: true },
+    { pubkey: LsuVault, isSigner: false, isWritable: true },
+    { pubkey: RedeemerLsuAta, isSigner: false, isWritable: true },
+    { pubkey: RedeemerYtAta, isSigner: false, isWritable: true },
+  ];
+
+  return new TransactionInstruction({
+    keys,
+    programId: new PublicKey(LYSERGIC_PROGRAM_ID),
+    data,
+  });
 }
 
 export const signTransactionInstruction = async (
@@ -245,12 +292,18 @@ export const signTransactionInstruction = async (
   signers: Array<Keypair>,
   feePayer: PublicKey,
   txInstructions: Array<TransactionInstruction>
-): Promise<string> => {
-  const tx = new Transaction();
-  tx.feePayer = feePayer;
-  tx.add(...txInstructions);
+) => {
+  const blockhash = await connection.getLatestBlockhash().then((res) => res.blockhash);
 
-  return await connection.sendTransaction(tx, signers, {
-    preflightCommitment: "single",
-  });
+  const messageV0 = new web3.TransactionMessage({
+    payerKey: feePayer,
+    recentBlockhash: blockhash,
+    instructions: txInstructions,
+  }).compileToV0Message();
+
+  const transaction = new web3.VersionedTransaction(messageV0);
+
+  transaction.sign(signers);
+
+  return transaction;
 };
