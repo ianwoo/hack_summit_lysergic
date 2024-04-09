@@ -16,12 +16,12 @@ export enum ColType {
 
 export type ModalProps = {
   state: ModalState;
-  lsuMint?: PublicKey;
+  lsuMint?: PublicKey; //hardcode LSU Mint
   maturityDate?: Date;
-  lsuVault?: PublicKey;
-  userLsuAta?: PublicKey;
-  userPtAta?: PublicKey;
-  userYtAta?: PublicKey;
+  lsuVault?: PublicKey; //retrieve using LSU Mint
+  userLsuAta?: PublicKey; //retrieve using LSU Mint
+  userPtAta?: PublicKey; //retrieve using LSU Mint
+  userYtAta?: PublicKey; //retrieve using LSU Mint
   amount?: Numberu64;
 };
 
