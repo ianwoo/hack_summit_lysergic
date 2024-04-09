@@ -1,0 +1,14 @@
+.spine {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  .wallet-bar {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    background: #0c0927;
+    justify-content: space-between;
+  }
+}
