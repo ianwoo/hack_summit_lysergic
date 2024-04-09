@@ -13,7 +13,7 @@ import {
   SolflareWalletAdapter,
   TorusWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
-import { clusterApiUrl } from "@solana/web3.js";
+import { Connection, clusterApiUrl } from "@solana/web3.js";
 
 // Default styles that can be overridden by your app
 import "@solana/wallet-adapter-react-ui/styles.css";
@@ -32,6 +32,8 @@ type Props = {
 export function Wallet(props: Props) {
   const { modal, setModal } = props;
 
+  const connection = new Connection("https://api.devnet.solana.com");
+
   const renderedModal = () => {
     switch (modal.state) {
       case ModalState.TokenizeYield:
@@ -41,7 +43,7 @@ export function Wallet(props: Props) {
       case ModalState.RedeemFromPT:
         return <RedeemPTModal setModal={setModal} />;
       case ModalState.ClaimYield:
-        return <ClaimYieldModal setModal={setModal} />;
+        return <ClaimYieldModal setModal={setModal} connection={connection} />;
     }
   };
 

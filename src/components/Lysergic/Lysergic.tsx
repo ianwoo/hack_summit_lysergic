@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import "./Lysergic.scss";
 import Table from "../table/Table";
 import { ColType, ModalProps } from "../../types";
-import { Connection } from "@solana/web3.js";
 
 type Props = {
   setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
@@ -12,8 +11,6 @@ function Lysergic(props: Props) {
   const { setModal } = props;
 
   const [bannerAnim, setBannerAnim] = useState("");
-
-  const connection = new Connection("https://api.devnet.solana.com");
 
   const date = new Date();
   const twelve = new Date(date.setFullYear(date.getFullYear() + 1));
