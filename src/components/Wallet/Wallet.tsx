@@ -61,11 +61,74 @@ export function Wallet(props: Props) {
           )
         );
       case ModalState.RedeemYield:
-        return <RedeemModal setModal={setModal} connection={connection} />;
+        return (
+          modal.user &&
+          modal.lsuMint &&
+          modal.maturityDate &&
+          modal.lsuVault &&
+          modal.userLsuAta &&
+          modal.userPtAta &&
+          modal.userYtAta &&
+          modal.amount !== undefined && (
+            <RedeemModal
+              setModal={setModal}
+              connection={connection}
+              redeemer={modal.user}
+              lsuMint={modal.lsuMint}
+              maturityDate={modal.maturityDate}
+              lsuVault={modal.lsuVault}
+              redeemerLsuAta={modal.userLsuAta}
+              redeemerPtAta={modal.userPtAta}
+              redeemerYtAta={modal.userYtAta}
+              amount={modal.amount}
+            />
+          )
+        );
       case ModalState.RedeemFromPT:
-        return <RedeemPTModal setModal={setModal} connection={connection} />;
+        return (
+          modal.user &&
+          modal.lsuMint &&
+          modal.maturityDate &&
+          modal.lsuVault &&
+          modal.userLsuAta &&
+          modal.userPtAta &&
+          modal.amount !== undefined && (
+            <RedeemPTModal
+              setModal={setModal}
+              connection={connection}
+              redeemer={modal.user}
+              lsuMint={modal.lsuMint}
+              maturityDate={modal.maturityDate}
+              lsuVault={modal.lsuVault}
+              redeemerLsuAta={modal.userLsuAta}
+              redeemerPtAta={modal.userPtAta}
+              amount={modal.amount}
+            />
+          )
+        );
       case ModalState.ClaimYield:
-        return <ClaimYieldModal setModal={setModal} connection={connection} />;
+        return (
+          modal.user &&
+          modal.lsuMint &&
+          modal.maturityDate &&
+          modal.lsuVault &&
+          modal.userLsuAta &&
+          modal.userPtAta &&
+          modal.userYtAta &&
+          modal.amount !== undefined && (
+            <ClaimYieldModal
+              setModal={setModal}
+              connection={connection}
+              claimer={modal.user}
+              lsuMint={modal.lsuMint}
+              maturityDate={modal.maturityDate}
+              lsuVault={modal.lsuVault}
+              claimerLsuAta={modal.userLsuAta}
+              claimerYtAta={modal.userYtAta}
+              amount={modal.amount}
+            />
+          )
+        );
     }
   };
 

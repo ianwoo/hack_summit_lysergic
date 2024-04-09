@@ -8,15 +8,14 @@ type Props = {
   claimer: PublicKey;
   lsuMint: PublicKey;
   lsuVault: PublicKey;
-  redeemerLsuAta: PublicKey;
-  redeemerYtAta: PublicKey;
+  claimerLsuAta: PublicKey;
+  claimerYtAta: PublicKey;
   amount: Numberu64;
   maturityDate: Date;
 };
 
 function ClaimYieldModal(props: Props) {
-  const { setModal, connection, claimer, lsuMint, lsuVault, redeemerLsuAta, redeemerYtAta, amount, maturityDate } =
-    props;
+  const { setModal, connection, claimer, lsuMint, lsuVault, claimerLsuAta, claimerYtAta, amount, maturityDate } = props;
 
   return (
     <div className="modal">
@@ -28,21 +27,14 @@ function ClaimYieldModal(props: Props) {
       </div>
       <button
         onClick={() => {
-          makeClaimYieldInstruction(
-            claimer,
-            lsuMint,
-            lsuVault,
-            redeemerLsuAta,
-            redeemerYtAta,
-            amount,
-            maturityDate
-          ).then((res: TransactionInstruction) =>
-            signTransactionInstruction(
-              connection,
-              [], //signers
-              claimer,
-              [res]
-            )
+          makeClaimYieldInstruction(claimer, lsuMint, lsuVault, claimerLsuAta, claimerYtAta, amount, maturityDate).then(
+            (res: TransactionInstruction) =>
+              signTransactionInstruction(
+                connection,
+                [], //signers
+                claimer,
+                [res]
+              )
           );
         }}
       >
