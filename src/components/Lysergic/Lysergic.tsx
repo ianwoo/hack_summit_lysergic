@@ -17,8 +17,8 @@ function Lysergic(props: Props) {
 
   const date = new Date();
   const twelve = new Date(date.setFullYear(date.getFullYear() + 1));
-  const eighteen = new Date(date.setFullYear(date.getFullYear() + 1.5));
-  const twentyfour = new Date(date.setFullYear(date.getFullYear() + 2));
+  const eighteen = new Date(new Date().getTime() + 47336400000);
+  const twentyfour = new Date();
 
   useEffect(() => {
     setBannerAnim("animate ");
@@ -47,12 +47,12 @@ function Lysergic(props: Props) {
           { label: "Actions", type: ColType.Actions, prefix: "", suffix: "" },
         ]}
         data={[
-          ["Lysergic MSOL", twelve.getTime().toString(), "SOL", "LS-SOL", "LY-SOL"],
-          ["Lysergic MSOL", eighteen.getTime().toString(), "SOL", "LS-SOL", "LY-SOL"],
-          ["Lysergic MSOL", twentyfour.getTime().toString(), "SOL", "LS-SOL", "LY-SOL"],
+          ["Lysergic MSOL", twelve.getTime().toString(), "SOL", "LS-SOL", "LY-SOL", ""],
+          ["Lysergic MSOL", eighteen.getTime().toString(), "SOL", "LS-SOL", "LY-SOL", ""],
+          ["Lysergic MSOL", twentyfour.getTime().toString(), "SOL", "LS-SOL", "LY-SOL", ""],
         ]}
         alignRightLastCol={false}
-        colClasses={["fifth", "twelve", "fifth", "twelve", "fifth"]}
+        colClasses={["fifth", "twelve", "fifth", "twelve", "fifth", "fifth"]}
         setModal={setModal}
       />
     </div>

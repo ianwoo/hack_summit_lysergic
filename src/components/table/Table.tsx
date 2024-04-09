@@ -37,13 +37,13 @@ function Table(props: Props) {
         return Number(d)
           ? [
               prefix,
-              new Date(Number(d) * 1000).toLocaleDateString("en-GB", {
+              new Date(Number(d)).toLocaleDateString("en-GB", {
                 month: "short",
                 day: "numeric",
                 year: "numeric",
               }) +
                 " " +
-                new Date(Number(d) * 1000).toLocaleTimeString("en-GB", { hourCycle: "h23" }),
+                new Date(Number(d)).toLocaleTimeString("en-GB", { hourCycle: "h23" }),
               suffix,
             ]
           : "-";

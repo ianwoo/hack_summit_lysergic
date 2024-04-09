@@ -148,6 +148,18 @@
     }
   }
 
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    button {
+      border-radius: 2px;
+      padding: 2px 6px;
+      background: #ffffff10;
+      color: #ffc304;
+    }
+  }
+
   .rows {
     height: calc(100vh - 245px);
     background: #0c0927;
@@ -158,8 +170,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 45px;
-    font-size: 14px;
+    height: 88px;
     background: #0c0927;
 
     .sort-header,
@@ -167,7 +178,7 @@
       display: flex;
       padding: 0 0 0 15px;
       font-family: "Plex Sans";
-      font-size: 24px;
+      font-size: 18px;
 
       &.twofifths {
         width: calc(40% - 30px);
@@ -309,11 +320,11 @@
         border-radius: 2px;
         padding: 3px 8px;
         background: none;
-        color: #ffffff;
+        color: #000;
         cursor: pointer;
 
         &.active {
-          background: #ffffff10;
+          border: 1px solid #000;
         }
       }
     }

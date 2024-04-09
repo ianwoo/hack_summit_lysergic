@@ -19,6 +19,10 @@ import { clusterApiUrl } from "@solana/web3.js";
 import "@solana/wallet-adapter-react-ui/styles.css";
 import Lysergic from "../Lysergic/Lysergic";
 import { ModalProps, ModalState } from "../../types";
+import TokenizeYieldModal from "../TokenizeYieldModal/TokenizeYieldModal";
+import RedeemModal from "../RedeemYieldModal/RedeemModal";
+import RedeemPTModal from "../RedeemPTModal/RedeemPTModal";
+import ClaimYieldModal from "../ClaimYieldModal/ClaimYieldModal";
 
 type Props = {
   modal: ModalProps;
@@ -31,13 +35,13 @@ export function Wallet(props: Props) {
   const renderedModal = () => {
     switch (modal.state) {
       case ModalState.TokenizeYield:
-        return <div />;
+        return <TokenizeYieldModal setModal={setModal} />;
       case ModalState.RedeemYield:
-        return <div />;
+        return <RedeemModal setModal={setModal} />;
       case ModalState.RedeemFromPT:
-        return <div />;
+        return <RedeemPTModal setModal={setModal} />;
       case ModalState.ClaimYield:
-        return <div />;
+        return <ClaimYieldModal setModal={setModal} />;
     }
   };
 
