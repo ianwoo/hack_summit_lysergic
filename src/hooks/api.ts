@@ -89,19 +89,7 @@ enum Expiry {
   TwentyFourMo = 24,
 }
 
-// type TokenizeYieldInstruction = {
-//   buyer: PublicKey;
-//   yield_tokenizer: PublicKey;
-//   lsu_mint: PublicKey;
-//   pt_mint: PublicKey;
-//   yt_mint: PublicKey;
-//   lsu_vault: PublicKey;
-//   buyer_lsu_ata: PublicKey;
-//   buyer_pt_ata: PublicKey;
-//   buyer_yt_ata: PublicKey;
-//   amount: Numberu64;
-// };
-class TokenizeYieldSchema {
+type TokenizeYieldInstruction = {
   buyer: PublicKey;
   yield_tokenizer: PublicKey;
   lsu_mint: PublicKey;
@@ -112,67 +100,7 @@ class TokenizeYieldSchema {
   buyer_pt_ata: PublicKey;
   buyer_yt_ata: PublicKey;
   amount: Numberu64;
-
-  constructor(fields: {
-    buyer: PublicKey;
-    yield_tokenizer: PublicKey;
-    lsu_mint: PublicKey;
-    pt_mint: PublicKey;
-    yt_mint: PublicKey;
-    lsu_vault: PublicKey;
-    buyer_lsu_ata: PublicKey;
-    buyer_pt_ata: PublicKey;
-    buyer_yt_ata: PublicKey;
-    amount: Numberu64;
-  }) {
-    this.buyer = fields.buyer;
-    this.yield_tokenizer = fields.yield_tokenizer;
-    this.lsu_mint = fields.lsu_mint;
-    this.pt_mint = fields.pt_mint;
-    this.yt_mint = fields.yt_mint;
-    this.lsu_vault = fields.lsu_vault;
-    this.buyer_lsu_ata = fields.buyer_lsu_ata;
-    this.buyer_pt_ata = fields.buyer_pt_ata;
-    this.buyer_yt_ata = fields.buyer_yt_ata;
-    this.amount = fields.amount;
-  }
-
-  static schema = new Map([
-    [
-      TokenizeYieldSchema,
-      {
-        kind: "struct",
-        fields: [
-          ["buyer", ["u8", 32]],
-          ["yield_tokenizer", ["u8", 32]],
-          ["lsu_mint", ["u8", 32]],
-          ["pt_mint", ["u8", 32]],
-          ["yt_mint", ["u8", 32]],
-          ["lsu_vault", ["u8", 32]],
-          ["buyer_lsu_ata", ["u8", 32]],
-          ["buyer_pt_ata", ["u8", 32]],
-          ["buyer_yt_ata", ["u8", 32]],
-          ["amount", ["u64"]],
-        ],
-      },
-    ],
-  ]);
-
-  serialize(): Uint8Array {
-    return serialize(TokenizeYieldSchema.schema, this);
-  }
-
-  printAll(): void {
-    console.log(`Staking started: ${convertUnixTime(this.timestamp.toNumber())}`);
-    console.log(`Staker Addr: ${new PublicKey(this.staker)}`);
-    console.log(`Mint of Staked Token: ${new PublicKey(this.mint)}`);
-    console.log(`Staking Active?: ${this.active}`);
-    console.log(`Withdrawn Amount: ${this.withdraw}`);
-    console.log(`Harvested Amount: ${this.harvested}`);
-    console.log(`Staked Amount: ${this.stakedAmount.toNumber() / 10 ** 9}`);
-    console.log(`Maximum Potential Reward: ${this.maxReward.toNumber() / 10 ** 9}`);
-  }
-}
+};
 
 type RedeemYieldInstruction = {
   redeemer: PublicKey;
@@ -254,21 +182,7 @@ export async function makeTokenizeYieldInstruction(
   const _yieldTokenAddr = await getYieldTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
   const _ptMint = await getPrincipalTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
 
-  const _tokenizeYieldInstructionData: TokenizeYieldInstruction = {
-    buyer: buyer,
-    yield_tokenizer: _yieldTokenizer,
-    lsu_mint: LsuMint,
-    pt_mint: _ptMint,
-    yt_mint: _yieldTokenAddr,
-    lsu_vault: LsuVault,
-    buyer_lsu_ata: BuyerLsuAta,
-    buyer_pt_ata: BuyerPtAta,
-    buyer_yt_ata: BuyerYtAta,
-    amount: amount,
-  };
-
-  const dataIx = Buffer.from(_serialize(_tokenizeYieldInstructionData, amount));
-  const data = Buffer.from(Uint8Array.of(1, ..._tokenizeYieldInstructionData));
+  const data = amount.toBuffer();
 
   const keys: AccountMeta[] = [
     { pubkey: buyer, isSigner: true, isWritable: true },
