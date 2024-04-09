@@ -161,8 +161,16 @@
   }
 
   .rows {
-    height: calc(100vh - 245px);
+    height: calc(100vh - 288px);
     background: #0c0927;
+  }
+
+  .row {
+    height: 169px;
+  }
+
+  .sort-headers {
+    height: 88px;
   }
 
   .sort-headers,
@@ -170,7 +178,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 88px;
     background: #0c0927;
 
     .sort-header,
@@ -265,7 +272,7 @@
         display: flex;
         flex-direction: column;
         font-size: 10px;
-        padding: 3px 0 0 3px;
+        padding: 0 0 0 3px;
         .active {
           color: #ffc304;
         }

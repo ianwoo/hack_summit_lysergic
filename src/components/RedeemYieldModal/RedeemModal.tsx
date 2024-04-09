@@ -51,14 +51,7 @@ function RedeemModal(props: Props) {
               redeemerYtAta,
               new Numberu64(amount),
               maturityDate
-            ).then((res: TransactionInstruction) =>
-              signTransactionInstruction(
-                connection,
-                [], //signers
-                redeemer,
-                [res]
-              )
-            );
+            ).then((res: TransactionInstruction) => signTransactionInstruction(connection, [], redeemer, [res]));
           }
         }}
       >

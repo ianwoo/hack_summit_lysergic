@@ -41,14 +41,7 @@ function TokenizeYieldModal(props: Props) {
               buyerPtAta,
               buyerYtAta,
               new Numberu64(amount)
-            ).then((res: TransactionInstruction) =>
-              signTransactionInstruction(
-                connection,
-                [], //signers
-                buyer,
-                [res]
-              )
-            );
+            ).then((res: TransactionInstruction) => signTransactionInstruction(connection, [], buyer, [res]));
           }
         }}
       >

@@ -36,20 +36,19 @@ function Lysergic(props: Props) {
       </div>
       <Table
         headers={[
-          { label: "Product", type: ColType.String, prefix: "", suffix: "" },
           { label: "Vesting Date", type: ColType.Date, prefix: "", suffix: "" },
           { label: "Deposit Asset", type: ColType.String, prefix: "", suffix: "" },
           { label: "Stake Token", type: ColType.String, prefix: "", suffix: "" },
-          { label: "Liquid Yield Token", type: ColType.String, prefix: "", suffix: "" },
+          { label: "Yield Token", type: ColType.String, prefix: "", suffix: "" },
           { label: "Actions", type: ColType.Actions, prefix: "", suffix: "" },
         ]}
         data={[
-          ["Lysergic MSOL", twelve.getTime().toString(), "SOL", "LS-SOL", "LY-SOL", ""],
-          ["Lysergic MSOL", eighteen.getTime().toString(), "SOL", "LS-SOL", "LY-SOL", ""],
-          ["Lysergic MSOL", twentyfour.getTime().toString(), "SOL", "LS-SOL", "LY-SOL", ""],
+          [twelve.getTime().toString(), "MSOL", "PT-SOL", "YT-SOL", ""],
+          [eighteen.getTime().toString(), "MSOL", "PT-SOL", "YT-SOL", ""],
+          [twentyfour.getTime().toString(), "MSOL", "PT-SOL", "YT-SOL", ""],
         ]}
         alignRightLastCol={false}
-        colClasses={["fifth", "twelve", "fifth", "twelve", "fifth", "fifth"]}
+        colClasses={["fifth", "fifth", "fifth", "fifth", "fifth"]}
         setModal={setModal}
       />
     </div>

@@ -39,14 +39,7 @@ function ClaimYieldModal(props: Props) {
               claimerYtAta,
               new Numberu64(amount),
               maturityDate
-            ).then((res: TransactionInstruction) =>
-              signTransactionInstruction(
-                connection,
-                [], //signers
-                claimer,
-                [res]
-              )
-            );
+            ).then((res: TransactionInstruction) => signTransactionInstruction(connection, [], claimer, [res]));
           }
         }}
       >

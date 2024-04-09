@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 // import { createDefaultAuthorizationResultCache, SolanaMobileWalletAdapter } from "@solana-mobile/wallet-adapter-mobile";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
+import { ConnectionProvider, WalletProvider, useWallet } from "@solana/wallet-adapter-react";
 import { WalletDisconnectButton, WalletModalProvider, WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import {
   //   GlowWalletAdapter,
@@ -32,13 +32,15 @@ type Props = {
 export function Wallet(props: Props) {
   const { modal, setModal } = props;
 
+  const { wallet } = useWallet();
+
   const connection = new Connection("https://api.devnet.solana.com");
 
   const renderedModal = () => {
     switch (modal.state) {
       case ModalState.TokenizeYield:
         return (
-          modal.user &&
+          wallet?.adapter.publicKey &&
           modal.lsuMint &&
           modal.maturityDate &&
           modal.lsuVault &&
@@ -48,7 +50,7 @@ export function Wallet(props: Props) {
             <TokenizeYieldModal
               setModal={setModal}
               connection={connection}
-              buyer={modal.user}
+              buyer={wallet?.adapter.publicKey}
               lsuMint={modal.lsuMint}
               maturityDate={modal.maturityDate}
               lsuVault={modal.lsuVault}
@@ -60,7 +62,7 @@ export function Wallet(props: Props) {
         );
       case ModalState.RedeemYield:
         return (
-          modal.user &&
+          wallet?.adapter.publicKey &&
           modal.lsuMint &&
           modal.maturityDate &&
           modal.lsuVault &&
@@ -70,7 +72,7 @@ export function Wallet(props: Props) {
             <RedeemModal
               setModal={setModal}
               connection={connection}
-              redeemer={modal.user}
+              redeemer={wallet?.adapter.publicKey}
               lsuMint={modal.lsuMint}
               maturityDate={modal.maturityDate}
               lsuVault={modal.lsuVault}
@@ -82,7 +84,7 @@ export function Wallet(props: Props) {
         );
       case ModalState.RedeemFromPT:
         return (
-          modal.user &&
+          wallet?.adapter.publicKey &&
           modal.lsuMint &&
           modal.maturityDate &&
           modal.lsuVault &&
@@ -91,7 +93,7 @@ export function Wallet(props: Props) {
             <RedeemPTModal
               setModal={setModal}
               connection={connection}
-              redeemer={modal.user}
+              redeemer={wallet?.adapter.publicKey}
               lsuMint={modal.lsuMint}
               maturityDate={modal.maturityDate}
               lsuVault={modal.lsuVault}
@@ -102,7 +104,7 @@ export function Wallet(props: Props) {
         );
       case ModalState.ClaimYield:
         return (
-          modal.user &&
+          wallet?.adapter.publicKey &&
           modal.lsuMint &&
           modal.maturityDate &&
           modal.lsuVault &&
@@ -112,7 +114,7 @@ export function Wallet(props: Props) {
             <ClaimYieldModal
               setModal={setModal}
               connection={connection}
-              claimer={modal.user}
+              claimer={wallet?.adapter.publicKey}
               lsuMint={modal.lsuMint}
               maturityDate={modal.maturityDate}
               lsuVault={modal.lsuVault}
