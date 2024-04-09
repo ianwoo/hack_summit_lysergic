@@ -1,6 +1,7 @@
 import { Connection, PublicKey, TransactionInstruction } from "@solana/web3.js";
 import { Numberu64, makeRedeemFromPTInstruction, signTransactionInstruction } from "../../hooks/api";
 import { ModalProps, ModalState } from "../../types";
+import { useState } from "react";
 
 type Props = {
   setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
@@ -10,13 +11,13 @@ type Props = {
   lsuVault: PublicKey;
   redeemerLsuAta: PublicKey;
   redeemerPtAta: PublicKey;
-  amount: Numberu64;
   maturityDate: Date;
 };
 
 function RedeemPTModal(props: Props) {
-  const { setModal, connection, redeemer, lsuMint, lsuVault, redeemerLsuAta, redeemerPtAta, amount, maturityDate } =
-    props;
+  const { setModal, connection, redeemer, lsuMint, lsuVault, redeemerLsuAta, redeemerPtAta, maturityDate } = props;
+
+  const [amount, setAmount] = useState<string>();
 
   return (
     <div className="modal">
@@ -26,24 +27,27 @@ function RedeemPTModal(props: Props) {
           &#10006;
         </div>
       </div>
+      <input type="number" min={0} onChange={(e) => setAmount(e.target.value)} />
       <button
         onClick={() => {
-          makeRedeemFromPTInstruction(
-            redeemer,
-            lsuMint,
-            lsuVault,
-            redeemerLsuAta,
-            redeemerPtAta,
-            amount,
-            maturityDate
-          ).then((res: TransactionInstruction) =>
-            signTransactionInstruction(
-              connection,
-              [], //signers
+          if (Number(amount) > 0 && amount !== undefined) {
+            makeRedeemFromPTInstruction(
               redeemer,
-              [res]
-            )
-          );
+              lsuMint,
+              lsuVault,
+              redeemerLsuAta,
+              redeemerPtAta,
+              new Numberu64(amount),
+              maturityDate
+            ).then((res: TransactionInstruction) =>
+              signTransactionInstruction(
+                connection,
+                [], //signers
+                redeemer,
+                [res]
+              )
+            );
+          }
         }}
       >
         REDEEM PT

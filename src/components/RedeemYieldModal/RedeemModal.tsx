@@ -1,6 +1,7 @@
 import { Connection, PublicKey, TransactionInstruction } from "@solana/web3.js";
 import { Numberu64, makeRedeemYieldInstruction, signTransactionInstruction } from "../../hooks/api";
 import { ModalProps, ModalState } from "../../types";
+import { useState } from "react";
 
 type Props = {
   setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
@@ -11,7 +12,6 @@ type Props = {
   redeemerLsuAta: PublicKey;
   redeemerPtAta: PublicKey;
   redeemerYtAta: PublicKey;
-  amount: Numberu64;
   maturityDate: Date;
 };
 
@@ -25,9 +25,10 @@ function RedeemModal(props: Props) {
     redeemerLsuAta,
     redeemerPtAta,
     redeemerYtAta,
-    amount,
     maturityDate,
   } = props;
+
+  const [amount, setAmount] = useState<string>();
 
   return (
     <div className="modal">
@@ -37,25 +38,28 @@ function RedeemModal(props: Props) {
           &#10006;
         </div>
       </div>
+      <input type="number" min={0} onChange={(e) => setAmount(e.target.value)} />
       <button
         onClick={() => {
-          makeRedeemYieldInstruction(
-            redeemer,
-            lsuMint,
-            lsuVault,
-            redeemerLsuAta,
-            redeemerPtAta,
-            redeemerYtAta,
-            amount,
-            maturityDate
-          ).then((res: TransactionInstruction) =>
-            signTransactionInstruction(
-              connection,
-              [], //signers
+          if (Number(amount) > 0 && amount !== undefined) {
+            makeRedeemYieldInstruction(
               redeemer,
-              [res]
-            )
-          );
+              lsuMint,
+              lsuVault,
+              redeemerLsuAta,
+              redeemerPtAta,
+              redeemerYtAta,
+              new Numberu64(amount),
+              maturityDate
+            ).then((res: TransactionInstruction) =>
+              signTransactionInstruction(
+                connection,
+                [], //signers
+                redeemer,
+                [res]
+              )
+            );
+          }
         }}
       >
         REDEEM YIELD

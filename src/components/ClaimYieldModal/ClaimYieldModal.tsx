@@ -1,6 +1,7 @@
 import { Connection, PublicKey, TransactionInstruction } from "@solana/web3.js";
 import { Numberu64, makeClaimYieldInstruction, signTransactionInstruction } from "../../hooks/api";
 import { ModalProps, ModalState } from "../../types";
+import { useState } from "react";
 
 type Props = {
   setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
@@ -10,12 +11,13 @@ type Props = {
   lsuVault: PublicKey;
   claimerLsuAta: PublicKey;
   claimerYtAta: PublicKey;
-  amount: Numberu64;
   maturityDate: Date;
 };
 
 function ClaimYieldModal(props: Props) {
-  const { setModal, connection, claimer, lsuMint, lsuVault, claimerLsuAta, claimerYtAta, amount, maturityDate } = props;
+  const { setModal, connection, claimer, lsuMint, lsuVault, claimerLsuAta, claimerYtAta, maturityDate } = props;
+
+  const [amount, setAmount] = useState<string>();
 
   return (
     <div className="modal">
@@ -25,17 +27,27 @@ function ClaimYieldModal(props: Props) {
           &#10006;
         </div>
       </div>
+      <input type="number" min={0} onChange={(e) => setAmount(e.target.value)} />
       <button
         onClick={() => {
-          makeClaimYieldInstruction(claimer, lsuMint, lsuVault, claimerLsuAta, claimerYtAta, amount, maturityDate).then(
-            (res: TransactionInstruction) =>
+          if (Number(amount) > 0 && amount !== undefined) {
+            makeClaimYieldInstruction(
+              claimer,
+              lsuMint,
+              lsuVault,
+              claimerLsuAta,
+              claimerYtAta,
+              new Numberu64(amount),
+              maturityDate
+            ).then((res: TransactionInstruction) =>
               signTransactionInstruction(
                 connection,
                 [], //signers
                 claimer,
                 [res]
               )
-          );
+            );
+          }
         }}
       >
         CLAIM YIELD

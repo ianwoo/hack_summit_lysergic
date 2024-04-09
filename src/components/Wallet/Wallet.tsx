@@ -44,8 +44,7 @@ export function Wallet(props: Props) {
           modal.lsuVault &&
           modal.userLsuAta &&
           modal.userPtAta &&
-          modal.userYtAta &&
-          modal.amount !== undefined && (
+          modal.userYtAta && (
             <TokenizeYieldModal
               setModal={setModal}
               connection={connection}
@@ -56,7 +55,6 @@ export function Wallet(props: Props) {
               buyerLsuAta={modal.userLsuAta}
               buyerPtAta={modal.userPtAta}
               buyerYtAta={modal.userYtAta}
-              amount={modal.amount}
             />
           )
         );
@@ -68,8 +66,7 @@ export function Wallet(props: Props) {
           modal.lsuVault &&
           modal.userLsuAta &&
           modal.userPtAta &&
-          modal.userYtAta &&
-          modal.amount !== undefined && (
+          modal.userYtAta && (
             <RedeemModal
               setModal={setModal}
               connection={connection}
@@ -80,7 +77,6 @@ export function Wallet(props: Props) {
               redeemerLsuAta={modal.userLsuAta}
               redeemerPtAta={modal.userPtAta}
               redeemerYtAta={modal.userYtAta}
-              amount={modal.amount}
             />
           )
         );
@@ -91,8 +87,7 @@ export function Wallet(props: Props) {
           modal.maturityDate &&
           modal.lsuVault &&
           modal.userLsuAta &&
-          modal.userPtAta &&
-          modal.amount !== undefined && (
+          modal.userPtAta && (
             <RedeemPTModal
               setModal={setModal}
               connection={connection}
@@ -102,7 +97,6 @@ export function Wallet(props: Props) {
               lsuVault={modal.lsuVault}
               redeemerLsuAta={modal.userLsuAta}
               redeemerPtAta={modal.userPtAta}
-              amount={modal.amount}
             />
           )
         );
@@ -114,8 +108,7 @@ export function Wallet(props: Props) {
           modal.lsuVault &&
           modal.userLsuAta &&
           modal.userPtAta &&
-          modal.userYtAta &&
-          modal.amount !== undefined && (
+          modal.userYtAta && (
             <ClaimYieldModal
               setModal={setModal}
               connection={connection}
@@ -125,7 +118,6 @@ export function Wallet(props: Props) {
               lsuVault={modal.lsuVault}
               claimerLsuAta={modal.userLsuAta}
               claimerYtAta={modal.userYtAta}
-              amount={modal.amount}
             />
           )
         );

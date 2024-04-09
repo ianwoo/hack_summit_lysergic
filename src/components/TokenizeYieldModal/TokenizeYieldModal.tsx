@@ -1,6 +1,7 @@
 import { Connection, PublicKey, TransactionInstruction } from "@solana/web3.js";
 import { Numberu64, makeTokenizeYieldInstruction, signTransactionInstruction } from "../../hooks/api";
 import { ModalProps, ModalState } from "../../types";
+import { useState } from "react";
 
 type Props = {
   setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
@@ -12,12 +13,12 @@ type Props = {
   buyerLsuAta: PublicKey;
   buyerPtAta: PublicKey;
   buyerYtAta: PublicKey;
-  amount: Numberu64;
 };
 
 function TokenizeYieldModal(props: Props) {
-  const { setModal, connection, buyer, lsuMint, maturityDate, lsuVault, buyerLsuAta, buyerPtAta, buyerYtAta, amount } =
-    props;
+  const { setModal, connection, buyer, lsuMint, maturityDate, lsuVault, buyerLsuAta, buyerPtAta, buyerYtAta } = props;
+
+  const [amount, setAmount] = useState<string>();
 
   return (
     <div className="modal">
@@ -27,25 +28,28 @@ function TokenizeYieldModal(props: Props) {
           &#10006;
         </div>
       </div>
+      <input type="number" min={0} onChange={(e) => setAmount(e.target.value)} />
       <button
         onClick={() => {
-          makeTokenizeYieldInstruction(
-            buyer,
-            lsuMint,
-            maturityDate,
-            lsuVault,
-            buyerLsuAta,
-            buyerPtAta,
-            buyerYtAta,
-            amount
-          ).then((res: TransactionInstruction) =>
-            signTransactionInstruction(
-              connection,
-              [], //signers
+          if (Number(amount) > 0 && amount !== undefined) {
+            makeTokenizeYieldInstruction(
               buyer,
-              [res]
-            )
-          );
+              lsuMint,
+              maturityDate,
+              lsuVault,
+              buyerLsuAta,
+              buyerPtAta,
+              buyerYtAta,
+              new Numberu64(amount)
+            ).then((res: TransactionInstruction) =>
+              signTransactionInstruction(
+                connection,
+                [], //signers
+                buyer,
+                [res]
+              )
+            );
+          }
         }}
       >
         TOKENIZE YIELD
