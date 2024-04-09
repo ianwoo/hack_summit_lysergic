@@ -37,11 +37,11 @@ export function Wallet(props: Props) {
   const renderedModal = () => {
     switch (modal.state) {
       case ModalState.TokenizeYield:
-        return <TokenizeYieldModal setModal={setModal} />;
+        return <TokenizeYieldModal setModal={setModal} connection={connection} />;
       case ModalState.RedeemYield:
-        return <RedeemModal setModal={setModal} />;
+        return <RedeemModal setModal={setModal} connection={connection} />;
       case ModalState.RedeemFromPT:
-        return <RedeemPTModal setModal={setModal} />;
+        return <RedeemPTModal setModal={setModal} connection={connection} />;
       case ModalState.ClaimYield:
         return <ClaimYieldModal setModal={setModal} connection={connection} />;
     }

@@ -13,11 +13,6 @@ export enum ColType {
 
 export type ModalProps = {
   state: ModalState;
-  allAccts?: MarketAccount[];
-  mktAcctsToSendTo?: (string | undefined)[];
-  setMktAcctsToSendTo?: React.Dispatch<React.SetStateAction<(string | undefined)[]>>;
-  orderId?: string;
-  nickname?: string;
 };
 
 export enum ModalState {

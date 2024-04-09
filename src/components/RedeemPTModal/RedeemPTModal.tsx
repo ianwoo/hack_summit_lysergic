@@ -46,7 +46,7 @@ function RedeemPTModal(props: Props) {
           );
         }}
       >
-        REDEEM
+        REDEEM PT
       </button>
     </div>
   );
