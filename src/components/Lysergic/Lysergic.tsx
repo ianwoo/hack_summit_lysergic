@@ -43,9 +43,9 @@ function Lysergic(props: Props) {
           { label: "Actions", type: ColType.Actions, prefix: "", suffix: "" },
         ]}
         data={[
-          [twelve.getTime().toString(), "MSOL", "PT-SOL", "YT-SOL", ""],
-          [eighteen.getTime().toString(), "MSOL", "PT-SOL", "YT-SOL", ""],
-          [twentyfour.getTime().toString(), "MSOL", "PT-SOL", "YT-SOL", ""],
+          [twelve.getTime().toString(), "MSOL", "PT-SOL", "YT-SOL", twelve.getTime().toString()],
+          [eighteen.getTime().toString(), "MSOL", "PT-SOL", "YT-SOL", eighteen.getTime().toString()],
+          [twentyfour.getTime().toString(), "MSOL", "PT-SOL", "YT-SOL", twentyfour.getTime().toString()],
         ]}
         alignRightLastCol={false}
         colClasses={["fifth", "fifth", "fifth", "fifth", "fifth"]}

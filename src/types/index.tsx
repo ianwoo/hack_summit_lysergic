@@ -16,7 +16,6 @@ export enum ColType {
 
 export type ModalProps = {
   state: ModalState;
-  user?: PublicKey;
   lsuMint?: PublicKey;
   maturityDate?: Date;
   lsuVault?: PublicKey;

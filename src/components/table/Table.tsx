@@ -48,28 +48,28 @@ function Table(props: Props) {
           <div className="buttons">
             <button
               onClick={() => {
-                setModal({ state: ModalState.TokenizeYield });
+                setModal({ state: ModalState.TokenizeYield, maturityDate: new Date(d) });
               }}
             >
               Tokenize Yield
             </button>
             <button
               onClick={() => {
-                setModal({ state: ModalState.RedeemYield });
+                setModal({ state: ModalState.RedeemYield, maturityDate: new Date(d) });
               }}
             >
               Redeem Yield
             </button>
             <button
               onClick={() => {
-                setModal({ state: ModalState.RedeemFromPT });
+                setModal({ state: ModalState.RedeemFromPT, maturityDate: new Date(d) });
               }}
             >
               Redeem PT
             </button>
             <button
               onClick={() => {
-                setModal({ state: ModalState.ClaimYield });
+                setModal({ state: ModalState.ClaimYield, maturityDate: new Date(d) });
               }}
             >
               Claim Yield
