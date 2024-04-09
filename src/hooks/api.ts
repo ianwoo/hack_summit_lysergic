@@ -1,6 +1,6 @@
 import BN from "bn.js";
 import assert from "assert";
-import web3 from "@solana/web3.js";
+import * as web3 from "@solana/web3.js";
 
 import { AccountMeta, Connection, Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
 

@@ -14,8 +14,8 @@ function Lysergic(props: Props) {
 
   const date = new Date();
   const twelve = new Date(date.setFullYear(date.getFullYear() + 1));
-  const eighteen = new Date(new Date().getTime() + 47336400000);
-  const twentyfour = new Date();
+  const eighteen = new Date(date.setMonth(date.getMonth() + 18));
+  const twentyfour = new Date(date.setFullYear(date.getFullYear() + 2));
 
   useEffect(() => {
     setBannerAnim("animate ");
