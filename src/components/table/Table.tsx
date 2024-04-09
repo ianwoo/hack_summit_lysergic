@@ -14,7 +14,7 @@ type Props = {
   data: string[][];
   alignRightLastCol: boolean;
   colClasses: string[];
-  setModal?: React.Dispatch<React.SetStateAction<ModalProps>>;
+  setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
   defaultColSort?: number;
 };
 
@@ -52,16 +52,31 @@ function Table(props: Props) {
           <div className="buttons">
             <button
               onClick={() => {
-                const split = d.split("_");
-                setModal &&
-                  setModal({
-                    state: ModalState.ConfirmCancelOrder,
-                    orderId: split[0],
-                    nickname: split[1],
-                  });
+                setModal({ state: ModalState.TokenizeYield });
               }}
             >
-              Cancel
+              Tokenize Yield
+            </button>
+            <button
+              onClick={() => {
+                setModal({ state: ModalState.RedeemYield });
+              }}
+            >
+              Redeem Yield
+            </button>
+            <button
+              onClick={() => {
+                setModal({ state: ModalState.RedeemFromPT });
+              }}
+            >
+              Redeem PT
+            </button>
+            <button
+              onClick={() => {
+                setModal({ state: ModalState.ClaimYield });
+              }}
+            >
+              Claim Yield
             </button>
           </div>
         );

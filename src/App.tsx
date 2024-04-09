@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <Wallet modal={modal} />
+      <Wallet modal={modal} setModal={setModal} />
     </>
   );
 }

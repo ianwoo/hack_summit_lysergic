@@ -22,10 +22,11 @@ import { ModalProps, ModalState } from "../../types";
 
 type Props = {
   modal: ModalProps;
+  setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
 };
 
 export function Wallet(props: Props) {
-  const { modal } = props;
+  const { modal, setModal } = props;
 
   const renderedModal = () => {
     switch (modal.state) {
@@ -81,7 +82,7 @@ export function Wallet(props: Props) {
             >
               {renderedModal()}
             </div>
-            <Lysergic />
+            <Lysergic setModal={setModal} />
           </div>
         </WalletModalProvider>
       </WalletProvider>

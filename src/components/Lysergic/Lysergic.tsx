@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import "./Lysergic.scss";
 import Table from "../table/Table";
-import { ColType } from "../../types";
+import { ColType, ModalProps } from "../../types";
 import { Connection } from "@solana/web3.js";
 
-function Lysergic() {
+type Props = {
+  setModal: React.Dispatch<React.SetStateAction<ModalProps>>;
+};
+
+function Lysergic(props: Props) {
+  const { setModal } = props;
+
   const [bannerAnim, setBannerAnim] = useState("");
 
   const connection = new Connection("https://api.devnet.solana.com");
@@ -47,6 +53,7 @@ function Lysergic() {
         ]}
         alignRightLastCol={false}
         colClasses={["fifth", "twelve", "fifth", "twelve", "fifth"]}
+        setModal={setModal}
       />
     </div>
   );
