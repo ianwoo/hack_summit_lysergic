@@ -22,10 +22,6 @@ function Table(props: Props) {
   const { headers, data, alignRightLastCol, colClasses, setModal, defaultColSort } = props;
 
   const [sort, setSort] = useState<number>(defaultColSort ? defaultColSort : 1);
-  const [dateFilterBack, setDateFilterBack] = useState<number>(0); //0 filter off,
-  //negative = numbers second to subtract from current epoch time to the back end of range
-  const [dateFilterFront, setDateFilterFront] = useState<number>(0); //0 unless a date is input into DD-MM-YYYY second bit
-  //negative = " to front end of range
 
   function dataReturn(colType: ColType, prefix: string, d: string, suffix: string) {
     switch (colType) {
@@ -86,68 +82,6 @@ function Table(props: Props) {
   }
 
   return [
-    headers.map((h: TableHeader) => h.type).includes(ColType.Date) && (
-      <div className="flex-row date-filter gap-eight card-padding tb-margin" key="time-filters">
-        <div
-          className={"date-filter-tab" + (dateFilterBack === 0 ? " active" : "")}
-          onClick={() => {
-            setDateFilterBack(0);
-            setDateFilterFront(0);
-          }}
-        >
-          All
-        </div>
-        <div
-          className={"date-filter-tab" + (dateFilterBack === -86400 ? " active" : "")}
-          onClick={() => {
-            setDateFilterBack(-86400);
-            setDateFilterFront(0);
-          }}
-        >
-          Yesterday
-        </div>
-        <div
-          className={"date-filter-tab" + (dateFilterBack === -604800 ? " active" : "")}
-          onClick={() => {
-            setDateFilterBack(-604800);
-            setDateFilterFront(0);
-          }}
-        >
-          7 Days
-        </div>
-        <div
-          className={"date-filter-tab" + (dateFilterBack === -2592000 ? " active" : "")}
-          onClick={() => {
-            setDateFilterBack(-2592000);
-            setDateFilterFront(0);
-          }}
-        >
-          30 Days
-        </div>
-        <input
-          className={
-            "date-filter-tab back" +
-            (dateFilterBack < 0 &&
-            dateFilterBack !== -2592000 &&
-            dateFilterBack !== -604800 &&
-            dateFilterBack !== -86400
-              ? " active"
-              : "")
-          }
-          type="date"
-          onChange={(e) => {
-            setDateFilterBack((0 - new Date().valueOf() + new Date(e.target.value).valueOf()) / 1000);
-          }}
-        />
-        <input
-          className={"date-filter-tab front" + (dateFilterFront > 0 ? " active" : "")}
-          type="date"
-          onChange={(e) => {
-            setDateFilterFront((0 - new Date().valueOf() + new Date(e.target.value).valueOf()) / 1000);
-          }}
-        />
-      </div>
-    ),
     <div className="sort-headers" key="headers">
       {headers.map((h: TableHeader, i: number) => (
         <div
@@ -190,21 +124,6 @@ function Table(props: Props) {
             }
           }
           return sort;
-        })
-        //date filter
-        .filter((d: string[]) => {
-          if (headers.map((h: TableHeader) => h.type).includes(ColType.Date) && dateFilterBack < 0) {
-            const dateColIdx =
-              //if selected header is a date, filter will be for that column
-              headers[sort - 1].type === ColType.Date
-                ? sort - 1
-                : headers.findIndex((h: TableHeader) => h.type === ColType.Date);
-            if (new Date().valueOf() / 1000 + dateFilterBack > Number(d[dateColIdx])) {
-              return false;
-            } else if (dateFilterFront < 0 && new Date().valueOf() / 1000 + dateFilterFront < Number(d[dateColIdx])) {
-              return false;
-            } else return true;
-          } else return true;
         })
         .map((r: string[], i: number) => (
           <div className="row" key={i}>
