@@ -2,9 +2,18 @@ import { useEffect, useState } from "react";
 import "./Lysergic.scss";
 import Table from "../table/Table";
 import { ColType } from "../../types";
+import { Connection } from "@solana/web3.js";
 
 function Lysergic() {
   const [bannerAnim, setBannerAnim] = useState("");
+
+  const connection = new Connection("https://api.devnet.solana.com");
+
+  const date = new Date();
+  const twelve = new Date(date.setFullYear(date.getFullYear() + 1));
+  const eighteen = new Date(date.setFullYear(date.getFullYear() + 1.5));
+  const twentyfour = new Date(date.setFullYear(date.getFullYear() + 2));
+
   useEffect(() => {
     setBannerAnim("animate ");
   }, []);
@@ -25,16 +34,16 @@ function Lysergic() {
       <Table
         headers={[
           { label: "Product", type: ColType.String, prefix: "", suffix: "" },
-          { label: "APR", type: ColType.String, prefix: "", suffix: "" },
+          { label: "Vesting Date", type: ColType.Date, prefix: "", suffix: "" },
           { label: "Deposit Asset", type: ColType.String, prefix: "", suffix: "" },
           { label: "Stake Token", type: ColType.String, prefix: "", suffix: "" },
           { label: "Liquid Yield Token", type: ColType.String, prefix: "", suffix: "" },
+          { label: "Actions", type: ColType.Actions, prefix: "", suffix: "" },
         ]}
         data={[
-          ["Lysergic MSOL", "18%", "SOL", "LS-SOL", "LY-SOL"],
-          ["Lysergic MSOL", "19%", "SOL", "LS-SOL", "LY-SOL"],
-          ["Lysergic MSOL", "20%", "SOL", "LS-SOL", "LY-SOL"],
-          ["Lysergic MSOL", "21%", "SOL", "LS-SOL", "LY-SOL"],
+          ["Lysergic MSOL", twelve.getTime().toString(), "SOL", "LS-SOL", "LY-SOL"],
+          ["Lysergic MSOL", eighteen.getTime().toString(), "SOL", "LS-SOL", "LY-SOL"],
+          ["Lysergic MSOL", twentyfour.getTime().toString(), "SOL", "LS-SOL", "LY-SOL"],
         ]}
         alignRightLastCol={false}
         colClasses={["fifth", "twelve", "fifth", "twelve", "fifth"]}

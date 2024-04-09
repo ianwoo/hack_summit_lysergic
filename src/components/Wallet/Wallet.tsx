@@ -1,6 +1,6 @@
 import "./Wallet.scss";
 
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 
 // import { createDefaultAuthorizationResultCache, SolanaMobileWalletAdapter } from "@solana-mobile/wallet-adapter-mobile";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
@@ -18,8 +18,28 @@ import { clusterApiUrl } from "@solana/web3.js";
 // Default styles that can be overridden by your app
 import "@solana/wallet-adapter-react-ui/styles.css";
 import Lysergic from "../Lysergic/Lysergic";
+import { ModalProps, ModalState } from "../../types";
 
-export const Wallet: FC = () => {
+type Props = {
+  modal: ModalProps;
+};
+
+export function Wallet(props: Props) {
+  const { modal } = props;
+
+  const renderedModal = () => {
+    switch (modal.state) {
+      case ModalState.TokenizeYield:
+        return <div />;
+      case ModalState.RedeemYield:
+        return <div />;
+      case ModalState.RedeemFromPT:
+        return <div />;
+      case ModalState.ClaimYield:
+        return <div />;
+    }
+  };
+
   // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
   const network = WalletAdapterNetwork.Devnet;
 
@@ -53,10 +73,18 @@ export const Wallet: FC = () => {
               <WalletMultiButton />
               <WalletDisconnectButton />
             </div>
+            <div
+              className={"mask" + (modal.state !== ModalState.None ? " visible" : "")}
+              // onClick={() =>
+              //   modal.state !== ModalState.None ? setModal({ state: ModalState.None }) : setMobileDropdownOpen(false)
+              // }
+            >
+              {renderedModal()}
+            </div>
             <Lysergic />
           </div>
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
   );
-};
+}

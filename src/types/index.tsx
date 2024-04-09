@@ -22,10 +22,10 @@ export type ModalProps = {
 
 export enum ModalState {
   None = 0,
-  Modify = 1,
-  AddAccount = 2,
-  CreateKey = 3,
-  ConfirmCancelOrder = 4,
+  TokenizeYield = 1,
+  RedeemYield = 2,
+  RedeemFromPT = 3,
+  ClaimYield = 4,
 }
 
 //user balances
