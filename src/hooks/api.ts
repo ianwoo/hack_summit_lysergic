@@ -203,6 +203,43 @@ export async function makeTokenizeYieldInstruction(
   });
 }
 
+export async function makeRedeemYieldInstruction(
+  Redeemer: PublicKey,
+  LsuMint: PublicKey,
+  LsuVault: PublicKey,
+  RedeemerLsuAta: PublicKey,
+  RedeemerPtAta: PublicKey,
+  BuyerYtAta: PublicKey,
+  amount: Numberu64
+) {
+  const _yieldTokenizer = await getYieldTokenizerAddress(LsuMint, MaturityDate);
+  const _yieldTokenAddr = await getYieldTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
+  const _ptMint = await getPrincipalTokenAddress(_yieldTokenizer, LsuMint, MaturityDate);
+
+  // redeemer: PublicKey;
+  // yield_tokenizer: PublicKey;
+  // lsu_mint: PublicKey;
+  // pt_mint: PublicKey;
+  // yt_mint: PublicKey;
+  // lsu_vault: PublicKey;
+  // redeemer_lsu_ata: PublicKey;
+  // redeemer_pt_ata: PublicKey;
+  // redeemer_yt_ata: PublicKey;
+  // amount: Numberu64;
+
+  const keys: AccountMeta[] = [
+    { pubkey: Redeemer, isSigner: true, isWritable: true },
+    { pubkey: _yieldTokenizer, isSigner: false, isWritable: true },
+    { pubkey: LsuMint, isSigner: false, isWritable: true },
+    { pubkey: _ptMint, isSigner: false, isWritable: true },
+    { pubkey: _yieldTokenAddr, isSigner: false, isWritable: true },
+    { pubkey: LsuVault, isSigner: false, isWritable: true },
+    { pubkey: BuyerLsuAta, isSigner: false, isWritable: true },
+    { pubkey: BuyerPtAta, isSigner: false, isWritable: true },
+    { pubkey: BuyerYtAta, isSigner: false, isWritable: true },
+  ];
+}
+
 export const signTransactionInstruction = async (
   connection: Connection,
   signers: Array<Keypair>,
