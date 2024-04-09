@@ -145,14 +145,22 @@ type ClaimYieldInstruction = {
 };
 
 //LIB FUNCTIONS
-export async function getYieldTokenizerAddress(LsuMint: Numberu64, MaturityDate: Date): Promise<PublicKey> {
+export function getYieldTokenizerAddress(LsuMint: Numberu64, MaturityDate: Date): PublicKey {
   const _unixTimestamp = MaturityDate.getTime();
   const _unixTimestampU64 = new Numberu64(_unixTimestamp);
-  return (
-    await PublicKey.findProgramAddressSync(
-      [LsuMint.toBuffer(), _unixTimestampU64.toBuffer()],
-      new PublicKey(LYSERGIC_PROGRAM_ID)
-    )
+  return PublicKey.findProgramAddressSync(
+    [LsuMint.toBuffer(), _unixTimestampU64.toBuffer()],
+    new PublicKey(LYSERGIC_PROGRAM_ID)
+  )[0];
+}
+//pretty sure is right
+
+export function getYieldTokenAddress(YieldTokenizer: PublicKey, LsuMint: Numberu64, MaturityDate: Date): PublicKey {
+  const _unixTimestamp = MaturityDate.getTime();
+  const _unixTimestampU64 = new Numberu64(_unixTimestamp);
+  return PublicKey.findProgramAddressSync(
+    [YieldTokenizer.toBuffer(), LsuMint.toBuffer(), _unixTimestampU64.toBuffer()],
+    new PublicKey(LYSERGIC_PROGRAM_ID)
   )[0];
 }
 //pretty sure is right
