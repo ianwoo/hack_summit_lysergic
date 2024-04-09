@@ -1,5 +1,4 @@
 import BN from "bn.js";
-import assert from "assert";
 import * as web3 from "@solana/web3.js";
 
 import { AccountMeta, Connection, Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
@@ -24,7 +23,6 @@ export class Numberu64 extends BN {
     if (b.length === U64SIZE) {
       return b;
     }
-    assert(b.length < U64SIZE, `Numberu64 is limited to ${U64SIZE} bytes`);
     const zeroPad = Buffer.alloc(U64SIZE);
     b.copy(zeroPad);
     return zeroPad;
@@ -32,7 +30,6 @@ export class Numberu64 extends BN {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static fromBuffer(buffer: any): any {
-    assert(buffer.length === U64SIZE, `Invalid buffer length: ${buffer.length}`);
     return new BN(
       [...buffer]
         .reverse()
@@ -50,7 +47,6 @@ export class Numberu32 extends BN {
     if (b.length === U32SIZE) {
       return b;
     }
-    assert(b.length < U32SIZE, `Numberu32 is limited to ${U32SIZE} bytes`);
 
     const zeroPad = Buffer.alloc(U32SIZE);
     b.copy(zeroPad);
@@ -59,7 +55,6 @@ export class Numberu32 extends BN {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static fromBuffer(buffer: any): any {
-    assert(buffer.length === U32SIZE, `Invalid buffer length: ${buffer.length}`);
     return new BN(
       [...buffer]
         .reverse()
