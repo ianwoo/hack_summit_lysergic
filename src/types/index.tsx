@@ -1,3 +1,6 @@
+import { PublicKey } from "@solana/web3.js";
+import { Numberu64 } from "../hooks/api";
+
 //login
 export type Authentication = {
   authorization: string;
@@ -13,6 +16,14 @@ export enum ColType {
 
 export type ModalProps = {
   state: ModalState;
+  user?: PublicKey;
+  lsuMint?: PublicKey;
+  maturityDate?: Date;
+  lsuVault?: PublicKey;
+  userLsuAta?: PublicKey;
+  userPtAta?: PublicKey;
+  userYtAta?: PublicKey;
+  amount?: Numberu64;
 };
 
 export enum ModalState {

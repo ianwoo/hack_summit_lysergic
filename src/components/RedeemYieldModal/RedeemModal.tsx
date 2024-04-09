@@ -32,7 +32,7 @@ function RedeemModal(props: Props) {
   return (
     <div className="modal">
       <div className="modal-header">
-        Redeem PT Modal
+        Redeem Yield
         <div className="close" onClick={() => setModal({ state: ModalState.None })}>
           &#10006;
         </div>
@@ -58,7 +58,7 @@ function RedeemModal(props: Props) {
           );
         }}
       >
-        REDEEM PT
+        REDEEM YIELD
       </button>
     </div>
   );

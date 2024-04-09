@@ -37,7 +37,29 @@ export function Wallet(props: Props) {
   const renderedModal = () => {
     switch (modal.state) {
       case ModalState.TokenizeYield:
-        return <TokenizeYieldModal setModal={setModal} connection={connection} />;
+        return (
+          modal.user &&
+          modal.lsuMint &&
+          modal.maturityDate &&
+          modal.lsuVault &&
+          modal.userLsuAta &&
+          modal.userPtAta &&
+          modal.userYtAta &&
+          modal.amount !== undefined && (
+            <TokenizeYieldModal
+              setModal={setModal}
+              connection={connection}
+              buyer={modal.user}
+              lsuMint={modal.lsuMint}
+              maturityDate={modal.maturityDate}
+              lsuVault={modal.lsuVault}
+              buyerLsuAta={modal.userLsuAta}
+              buyerPtAta={modal.userPtAta}
+              buyerYtAta={modal.userYtAta}
+              amount={modal.amount}
+            />
+          )
+        );
       case ModalState.RedeemYield:
         return <RedeemModal setModal={setModal} connection={connection} />;
       case ModalState.RedeemFromPT:
