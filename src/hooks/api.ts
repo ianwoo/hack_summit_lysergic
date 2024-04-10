@@ -163,10 +163,10 @@ export function getPrincipalTokenAddress(YieldTokenizer: PublicKey, LsuMint: Pub
 
 //TODO
 //GET FUNCTIONS
-export async function getVaultAndAtas(connection: Connection, staker: PublicKey, LsuMint: PublicKey) {
-  const stakerTokenAddr = await findAssociatedTokenAddress(staker, LsuMint);
-  const deserialized = deserialize(stakerTokenAddr);
-}
+// export async function getVaultAndAtas(connection: Connection, staker: PublicKey, LsuMint: PublicKey) {
+//   const stakerTokenAddr = await findAssociatedTokenAddress(staker, LsuMint);
+//   const deserialized = deserialize(stakerTokenAddr);
+// }
 
 //STAKE / REDEEM FUNCTIONS
 export async function makeTokenizeYieldInstruction(
