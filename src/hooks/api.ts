@@ -2,7 +2,7 @@ import BN from "bn.js";
 import * as web3 from "@solana/web3.js";
 
 import { AccountMeta, Connection, Keypair, PublicKey, TransactionInstruction } from "@solana/web3.js";
-import { deserialize } from "borsh";
+// import { deserialize } from "borsh";
 import { ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 
 const U64SIZE: number = 8;
